@@ -1,66 +1,152 @@
-// =======================================
-// BACK TO TOP BUTTON
-// =======================================
+/* =========================================================
+   ABHI ROHITH PORTFOLIO
+   BASIC INTERACTIONS
+========================================================= */
 
-const topBtn = document.getElementById("topBtn");
 
-// Hide button initially
-topBtn.style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
 
-// Show button after scrolling
-window.addEventListener("scroll", () => {
 
-    if (window.scrollY > 300) {
+    /* =====================================================
+       MOBILE NAVIGATION
+    ===================================================== */
 
-        topBtn.style.display = "flex";
+    const menuBtn = document.querySelector(".menu-btn");
 
-    } else {
+    const navLinks = document.querySelector(".nav-links");
 
-        topBtn.style.display = "none";
+
+    if (menuBtn && navLinks) {
+
+        menuBtn.addEventListener("click", function () {
+
+            navLinks.classList.toggle("active");
+
+            const icon = menuBtn.querySelector("i");
+
+            if (icon) {
+
+                if (navLinks.classList.contains("active")) {
+
+                    icon.classList.remove("fa-bars");
+
+                    icon.classList.add("fa-xmark");
+
+                } else {
+
+                    icon.classList.remove("fa-xmark");
+
+                    icon.classList.add("fa-bars");
+
+                }
+
+            }
+
+        });
+
+
+        /* Close mobile menu after clicking a link */
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                navLinks.classList.remove("active");
+
+                const icon = menuBtn.querySelector("i");
+
+                if (icon) {
+
+                    icon.classList.remove("fa-xmark");
+
+                    icon.classList.add("fa-bars");
+
+                }
+
+            });
+
+        });
 
     }
 
-});
 
-// Scroll smoothly to top
-topBtn.addEventListener("click", () => {
 
-    window.scrollTo({
+    /* =====================================================
+       BACK TO TOP
+    ===================================================== */
 
-        top: 0,
+    const topBtn = document.getElementById("topBtn");
 
-        behavior: "smooth"
+
+    if (topBtn) {
+
+        window.addEventListener("scroll", function () {
+
+            if (window.scrollY > 400) {
+
+                topBtn.style.display = "flex";
+
+            } else {
+
+                topBtn.style.display = "none";
+
+            }
+
+        });
+
+
+        topBtn.addEventListener("click", function () {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        });
+
+    }
+
+
+
+    /* =====================================================
+       CLOSE MOBILE MENU WHEN CLICKING OUTSIDE
+    ===================================================== */
+
+    document.addEventListener("click", function (event) {
+
+        if (!menuBtn || !navLinks) return;
+
+        const clickedInsideMenu =
+            navLinks.contains(event.target);
+
+        const clickedMenuButton =
+            menuBtn.contains(event.target);
+
+
+        if (
+            !clickedInsideMenu &&
+            !clickedMenuButton &&
+            navLinks.classList.contains("active")
+        ) {
+
+            navLinks.classList.remove("active");
+
+            const icon = menuBtn.querySelector("i");
+
+            if (icon) {
+
+                icon.classList.remove("fa-xmark");
+
+                icon.classList.add("fa-bars");
+
+            }
+
+        }
 
     });
 
-});
-
-
-
-// =======================================
-// MOBILE MENU
-// =======================================
-
-const menuBtn = document.querySelector(".menu-btn");
-
-const navLinks = document.querySelector(".nav-links");
-
-menuBtn.addEventListener("click", () => {
-
-    navLinks.classList.toggle("active");
-
-});
-
-
-
-// Close menu after clicking a link
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navLinks.classList.remove("active");
-
-    });
 
 });
